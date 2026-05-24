@@ -6,7 +6,7 @@ import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.lang.NonNull;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class OrderController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<Order> getOrderById(@PathVariable @NonNull Long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
     
@@ -76,7 +76,7 @@ public class OrderController {
     
     // Automation API Endpoint
     @PostMapping("/{orderId}/automation/process")
-    public ResponseEntity<Order> processOrderAutomation(@PathVariable Long orderId) {
+    public ResponseEntity<Order> processOrderAutomation(@PathVariable @NonNull Long orderId) {
         orderService.processOrderAutomation(orderId);
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }

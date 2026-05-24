@@ -1,7 +1,10 @@
+
 package com.fashionstore.service;
+ import org.springframework.lang.NonNull;
 
 import com.fashionstore.model.Product;
 import com.fashionstore.repository.ProductRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +32,7 @@ public class ProductService {
         return productRepository.findByCategoryAndAvailableTrue(category);
     }
     
-    public Product getProductById(Long id) {
+    public Product getProductById(@NonNull Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
@@ -38,7 +41,7 @@ public class ProductService {
         return productRepository.save(product);
     }
     
-    public Product updateProduct(Long id, Product productDetails) {
+    public Product updateProduct(@NonNull Long id, @NonNullProduct productDetails) {
         Product product = getProductById(id);
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());
@@ -50,12 +53,12 @@ public class ProductService {
         return productRepository.save(product);
     }
     
-    public void deleteProduct(Long id) {
+    public void deleteProduct(@NonNull Long id) {
         Product product = getProductById(id);
         productRepository.delete(product);
     }
     
-    public Product updateStock(Long id, Integer quantity) {
+    public Product updateStock(@NonNull Long id, Integer quantity) {
         Product product = getProductById(id);
         product.setStock(product.getStock() - quantity);
         if (product.getStock() <= 0) {
